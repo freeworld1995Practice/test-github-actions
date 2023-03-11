@@ -42,5 +42,5 @@ jobs:
             {
               "@type": "Stale PR",
               "@context": "http://schema.org/extensions",
-              "title": "You have stale PR my friend ${needs.stale.outputs.staled-issues-prs}"
+              "title": "You have stale PR my friend ${{ needs.stale.outputs.staled-issues-prs }}"
             }
