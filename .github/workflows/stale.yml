@@ -7,8 +7,8 @@ name: Mark stale issues and pull requests
 
 on:
   push: {}
-  schedule:
-  - cron: '*/5 * * * *'
+#   schedule:
+#   - cron: '*/5 * * * *'
 
 jobs:
   stale:
@@ -25,9 +25,9 @@ jobs:
 #       id: step1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 10 days.'
+        stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 1 days.'
         days-before-pr-stale: 1
-        start-date: '2020-04-18T00:00:00Z' # ISO 8601 or RFC 2822
+#         start-date: '2020-04-18T00:00:00Z' # ISO 8601 or RFC 2822
   job2:
     runs-on: ubuntu-latest
     needs: stale
