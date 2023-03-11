@@ -17,12 +17,12 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    outputs:
-      output1: ${{ steps.step1.outputs.staled-issues-prs }}
+#     outputs:
+#       output1: ${{ steps.step1.outputs.staled-issues-prs }}
 
     steps:
     - uses: actions/stale@v7
-      id: step1
+#       id: step1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 10 days.'
@@ -41,3 +41,4 @@ jobs:
         with:
           webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
           overwrite: "{title: `Overwrote title in $OUTPUT1`}"
+      - run: "echo $OUTPUT1"
