@@ -25,3 +25,21 @@ jobs:
         stale-pr-message: 'Stale pull request message'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
+        
+  job-notify-teams:
+    runs-on: ubuntu-latest
+    needs: stale
+    permissions:
+      issues: write
+      pull-requests: write
+      
+    steps:
+    - uses: skitionek/notify-microsoft-teams@master
+      with:
+        webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+        raw: >-
+            {
+              "@type": "Stale PR",
+              "@context": "http://schema.org/extensions",
+              "title": "You have stale PR my friend ${needs.stale.outputs.staled-issues-prs}"
+            }
