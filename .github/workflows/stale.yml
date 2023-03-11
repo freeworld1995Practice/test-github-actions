@@ -35,9 +35,9 @@ jobs:
       pull-requests: write
       
     steps:
-    - env:
-        OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
-    - uses: skitionek/notify-microsoft-teams@master
-      with:
-        webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
-        overwrite: "{title: `Overwrote title in $OUTPUT1`}"
+      - env:
+          OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
+      - uses: skitionek/notify-microsoft-teams@master
+        with:
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          overwrite: "{title: `Overwrote title in $OUTPUT1`}"
