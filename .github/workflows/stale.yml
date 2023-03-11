@@ -28,7 +28,7 @@ jobs:
         stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 1 days.'
         days-before-pr-stale: 0.11
         ignore-updates: true
-    - run: echo "waka waka $output1"
+    - run: echo "waka waka $staled-issues-prs"
   job2:
     runs-on: ubuntu-latest
     needs: stale
