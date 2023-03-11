@@ -27,18 +27,25 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 10 days.'
         days-before-pr-stale: 1
-        
-  job-notify-teams:
+  job2:
     runs-on: ubuntu-latest
     needs: stale
-    permissions:
-      issues: write
-      pull-requests: write
-    env:
-      OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
     steps:
-      - uses: skitionek/notify-microsoft-teams@master
-        with:
-          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
-          overwrite: "{title: `Overwrote title in $OUTPUT1`}"
-      - run: "echo $OUTPUT1"
+      - env:
+          OUTPUT1: ${{needs.stale.outputs.staled-issues-prs}}
+          OUTPUT2: ${{needs.stale.outputs.closed-issues-prs}}
+        run: echo "say oh yeah $OUTPUT1 $OUTPUT2"
+#   job-notify-teams:
+#     runs-on: ubuntu-latest
+#     needs: stale
+#     permissions:
+#       issues: write
+#       pull-requests: write
+#     env:
+#       OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
+#     steps:
+#       - uses: skitionek/notify-microsoft-teams@master
+#         with:
+#           webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+#           overwrite: "{title: `Overwrote title in $OUTPUT1`}"
+#       - run: "echo $OUTPUT1"
