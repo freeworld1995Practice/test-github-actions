@@ -17,15 +17,16 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
+    outputs:
+      output1: ${{ steps.step1.outputs.staled-issues-prs }}
 
     steps:
     - uses: actions/stale@v7
+    - id: step1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Stale issue message'
-        stale-pr-message: 'Stale pull request message'
-        stale-issue-label: 'no-issue-activity'
-        stale-pr-label: 'no-pr-activity'
+        stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 10 days.'
+        days-before-pr-stale: 1
         
   job-notify-teams:
     runs-on: ubuntu-latest
@@ -34,7 +35,7 @@ jobs:
       issues: write
       pull-requests: write
     env:
-      OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
+      OUTPUT1: ${{ needs.stale.outputs.output1 }}
     steps:
       - uses: skitionek/notify-microsoft-teams@master
         with:
