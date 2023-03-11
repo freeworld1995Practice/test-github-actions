@@ -35,7 +35,7 @@ jobs:
       issues: write
       pull-requests: write
     env:
-      OUTPUT1: ${{ needs.stale.outputs.output1 }}
+      OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
     steps:
       - uses: skitionek/notify-microsoft-teams@master
         with:
