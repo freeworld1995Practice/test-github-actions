@@ -36,7 +36,7 @@ jobs:
       
     steps:
     - env:
-          OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
+        OUTPUT1: ${{ needs.stale.outputs.staled-issues-prs }}
     - uses: skitionek/notify-microsoft-teams@master
       with:
         webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
