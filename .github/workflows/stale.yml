@@ -18,7 +18,7 @@ jobs:
       issues: write
       pull-requests: write
     outputs:
-      output1: ${{ steps.step-stale.env.STALE_PRS }}
+      staled-prs-output: ${{ steps.step-stale.outputs.staled-prs }}
 
     steps:
     - uses: actions/stale@v7
@@ -31,15 +31,17 @@ jobs:
     - name: Print outputs
       env:
         STALE_PRS: ${{ steps.step-stale.outputs.staled-issues-prs }}
-      run: echo "Stale PRs count ${#STALE_PRS[@]}"
+      run: |
+        echo "Stale PRs count ${#STALE_PRS[@]}"
+        echo "staled-prs=${#STALE_PRS[@]}" >> $GITHUB_OUTPUT
   notify-team-job:
     runs-on: ubuntu-latest
     needs: stale-job
     steps:
       - name: Print outputs
         env:
-          OUTPUT1: ${{needs.stale-job.outputs.output1}}
-        run: echo "say oh yeah $OUTPUT1"
+          STALE_PRS_OUTPUT: ${{needs.stale-job.outputs.staled-prs-output}}
+        run: echo "say oh yeah $STALE_PRS_OUTPUT"
 #   job-notify-teams:
 #     runs-on: ubuntu-latest
 #     needs: stale
