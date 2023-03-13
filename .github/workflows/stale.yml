@@ -44,11 +44,11 @@ jobs:
 #         run: echo "say oh yeah $STALE_PRS_OUTPUT"
   notify-team-job:
     runs-on: ubuntu-latest
-    env:
-      STALE_PRS_OUTPUT: ${{needs.stale-job.outputs.staled-prs-output}}
     needs: stale-job
     steps:
       - uses: skitionek/notify-microsoft-teams@master
+        env:
+          STALE_PRS_OUTPUT: ${{needs.stale-job.outputs.staled-prs-output}}
         with:
           webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
           overwrite: "{title: `We have $STALE_PRS_OUTPUT staled PRs. Please give it some attention`}"
