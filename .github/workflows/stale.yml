@@ -11,7 +11,7 @@ on:
 #   - cron: '*/5 * * * *'
 
 jobs:
-  stale:
+  stale-job:
 
     runs-on: ubuntu-latest
     permissions:
@@ -29,13 +29,13 @@ jobs:
         days-before-pr-stale: 0.11
         ignore-updates: true
     - run: echo "waka waka ${outputs.staled-issues-prs}"
-  job2:
+  notify-team-job:
     runs-on: ubuntu-latest
-    needs: stale
+    needs: stale-job
     steps:
       - env:
-          OUTPUT1: ${{needs.stale.outputs.staled-issues-prs}}
-          OUTPUT2: ${{needs.stale.outputs.closed-issues-prs}}
+          OUTPUT1: ${{needs.stale-job.outputs.staled-issues-prs}}
+          OUTPUT2: ${{needs.stale-job.outputs.closed-issues-prs}}
         run: echo "say oh yeah $OUTPUT1 $OUTPUT2"
 #   job-notify-teams:
 #     runs-on: ubuntu-latest
