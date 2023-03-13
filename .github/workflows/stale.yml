@@ -31,7 +31,7 @@ jobs:
     - name: Print outputs
       env:
         GITHUB_CONTEXT: ${{ format('{0},{1}', toJSON(steps.step-stale.outputs.staled-issues-prs), toJSON(steps.step-stale.outputs.closed-issues-prs)) }}
-        run: echo "waka waka $GITHUB_CONTEXT"
+      run: echo "waka waka $GITHUB_CONTEXT"
   notify-team-job:
     runs-on: ubuntu-latest
     needs: stale-job
