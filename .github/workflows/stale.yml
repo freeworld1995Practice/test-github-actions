@@ -18,7 +18,7 @@ jobs:
       issues: write
       pull-requests: write
     outputs:
-      output1: ${{ steps.step-stale.outputs.staled-issues-prs }}
+      output1: ${{ steps.step-stale.env.STALE_PRS }}
 
     steps:
     - uses: actions/stale@v7
@@ -30,16 +30,15 @@ jobs:
         ignore-updates: true
     - name: Print outputs
       env:
-        GITHUB_CONTEXT: ${{ format('{0},{1}', toJSON(steps.step-stale.outputs.staled-issues-prs), toJSON(steps.step-stale.outputs.closed-issues-prs)) }}
-      run: echo "waka waka $GITHUB_CONTEXT"
+        STALE_PRS: ${{ steps.step-stale.outputs.staled-issues-prs }}
+      run: echo "waka waka $STALE_PRS"
   notify-team-job:
     runs-on: ubuntu-latest
     needs: stale-job
     steps:
       - env:
-          OUTPUT1: ${{needs.stale-job.outputs.staled-issues-prs}}
-          OUTPUT2: ${{needs.stale-job.outputs.closed-issues-prs}}
-        run: echo "say oh yeah $OUTPUT1 $OUTPUT2"
+          OUTPUT1: ${{needs.stale-job.outputs.output1}}
+        run: echo "say oh yeah $OUTPUT1"
 #   job-notify-teams:
 #     runs-on: ubuntu-latest
 #     needs: stale
