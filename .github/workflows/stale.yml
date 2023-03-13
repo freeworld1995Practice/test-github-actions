@@ -18,17 +18,20 @@ jobs:
       issues: write
       pull-requests: write
     outputs:
-      output1: ${{ steps.step1.outputs.staled-issues-prs }}
+      output1: ${{ steps.step-stale.outputs.staled-issues-prs }}
 
     steps:
     - uses: actions/stale@v7
-      id: step1
+      id: step-stale
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 1 days.'
         days-before-pr-stale: 0.11
         ignore-updates: true
-    - run: echo "waka waka ${outputs.staled-issues-prs}"
+    - name: Print outputs
+      env:
+        GITHUB_CONTEXT: ${{ format('{0},{1}', toJSON(steps.step-stale.outputs.staled-issues-prs), toJSON(steps.step-stale.outputs.closed-issues-prs)) }}
+        run: echo "waka waka $GITHUB_CONTEXT"
   notify-team-job:
     runs-on: ubuntu-latest
     needs: stale-job
