@@ -52,7 +52,7 @@ jobs:
           STALE_PRS_OUTPUT: ${{needs.stale-job.outputs.staled-prs-output}}
         with:
           webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
-          overwrite: "{title: `We have ${STALE_PRS_OUTPUT} staled PRs. Please give it some attention`}"
+          overwrite: "{title: `We have $STALE_PRS_OUTPUT staled PRs. Please give it some attention`}"
       - name: Print output
         env:
           STALE_PRS_OUTPUT: ${{needs.stale-job.outputs.staled-prs-output}}
