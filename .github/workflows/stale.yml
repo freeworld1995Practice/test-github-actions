@@ -57,4 +57,4 @@ jobs:
       - name: Print output
         env:
           STALE_PRS_OUTPUT: ${{ needs.stale-job.outputs.staled-prs-output }}
-        run: echo "We have $STALE_PRS_OUTPUT staled PRs"
+        run: echo "We have ${{ needs.stale-job.outputs.staled-prs-output }} staled PRs"
