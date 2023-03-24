@@ -6,9 +6,8 @@
 name: Mark stale issues and pull requests
 
 on:
-  push: {}
-#   schedule:
-#   - cron: '*/5 * * * *'
+  schedule:
+  - cron: '30 23 * * *'
 
 jobs:
   stale-job:
@@ -33,15 +32,7 @@ jobs:
       run: |
         echo "Stale PRs count ${#STALE_PRS[@]}"
         echo "staled_prs=${#STALE_PRS[@]}" >> $GITHUB_OUTPUT # Command to set output, to be use in `notify-team-job` -> https://urlis.net/tpvquv5p
-        
-#   notify-team-job:
-#     runs-on: ubuntu-latest
-#     needs: stale-job
-#     steps:
-#       - name: Print outputs
-#         env:
-#           STALE_PRS_OUTPUT: ${{needs.stale-job.outputs.staled-prs-output}}
-#         run: echo "say oh yeah $STALE_PRS_OUTPUT"
+
   notify-team-job:
     runs-on: ubuntu-latest
     needs: stale-job
