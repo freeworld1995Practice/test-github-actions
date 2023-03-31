@@ -1,0 +1,25 @@
+name: Pull Request Notifications
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [ created, opened, ready_for_review, reopened]
+    
+jobs:
+  success:
+    name: New Pull Request Ready To Review
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Get PR url
+        id: pr-url
+        uses: ammaratef45/pr-url-action@v1
+      - name: Notify to Android Code Review via Teams
+        uses: Skitionek/notify-microsoft-teams@v1.0.4
+        if: always()
+        with:
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          overwrite: "{title: `${sender.login} - ${{ github.event.pull_request.title }}`, potentialAction:[{name: `Open PR in browser`,targets: [{ os: `default`,uri: `${{ steps.pr-url.outputs.url }}`}]}]}"
+          dry_run: False
